@@ -1,0 +1,120 @@
+body {
+  font-family: sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+button {
+  display: inline-block;
+  border: none;
+  padding: 1rem 2rem;
+  margin: 0;
+  text-decoration: none;
+  background: purple;
+  color: #ffffff;
+  font-size: 1rem;
+  cursor: pointer;
+  text-align: center;
+  transition: background 250ms ease-in-out, transform 150ms ease;
+}
+
+button:hover,
+button:focus {
+  background: purple;
+}
+
+button:focus {
+  outline: 1px solid #fff;
+}
+
+button:active {
+  transform: scale(0.99);
+}
+
+.App {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.StatsSection {
+  flex: 0 1 auto;
+  padding: 0 1em;
+}
+
+.CounterSection {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 25%;
+}
+
+.CounterContainer {
+  display: flex;
+  align-items: baseline;
+}
+
+.CounterDigits {
+  margin-right: 0.5em;
+}
+
+.IntegerDigits {
+  margin: 0;
+  font-size: 4em;
+  font-weight: 500;
+}
+
+.FractionDigits {
+  margin: 0;
+  font-size: 2em;
+}
+
+.CyclesSection {
+  flex: 0 1 auto;
+  padding: 0 1em;
+}
+
+.ActionSection {
+  flex: 0 1 auto;
+  padding: 2em;
+}
+
+.CycleItem {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1em;
+}
+
+.CycleInterval {
+  font-size: 1.5em;
+}
+
+.CycleColumn {
+  flex: 1;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.StartStopButton {
+  width: 100%;
+  font-size: 1.5em;
+  padding: 1em;
+}
+
+.Counter {
+  font-size: 4em;
+  font-weight: bold;
+}
+
+.Separator {
+  margin-block-start: 1em;
+  margin-block-end: 1em;
+  border-color: black;
+}
+
+.Scrollable {
+  overflow-y: auto;
+  max-height: 7rem;
+}

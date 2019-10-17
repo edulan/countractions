@@ -1,5 +1,5 @@
 import React from "react";
-import { formatInterval } from "./formatters";
+import { formatMinutes, formatHours } from "./formatters";
 
 function Stats({ ticks }) {
   const intervals = ticks
@@ -16,20 +16,29 @@ function Stats({ ticks }) {
   const elapsedsCount = elapseds.length;
   const elapsedsAverage = elapsedsSum / elapsedsCount;
 
+  const [firstTick] = ticks.slice(0);
+  const [lastTick] = ticks.slice(-1);
+
   return (
     <>
       <div className="CycleItem">
         <div className="CycleColumn">
           <span className="CycleInterval">
-            {elapsedsCount > 0 && formatInterval(elapsedsAverage)}
+            {intervalsCount > 0 && formatMinutes(intervalsAverage)}
           </span>
         </div>
         <div className="CycleColumn">
           <span className="CycleInterval">
-            {intervalsCount > 0 && formatInterval(intervalsAverage)}
+            {elapsedsCount > 0 && formatMinutes(elapsedsAverage)}
           </span>
         </div>
-        <div className="CycleColumn"></div>
+        <div className="CycleColumn">
+          <span className="CycleInterval">
+            {firstTick &&
+              lastTick &&
+              formatHours(firstTick.date - lastTick.date)}
+          </span>
+        </div>
       </div>
     </>
   );

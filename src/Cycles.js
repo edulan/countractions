@@ -1,16 +1,18 @@
 import React from "react";
-import { formatInterval, formatTime } from "./formatters";
+import { formatMinutes, formatTime } from "./formatters";
 
-function Cycles({ ticks }) {
+import TrashIcon from "./TrashIcon";
+
+function Cycles({ ticks, onRemove }) {
   return (
     <>
       <div className="CycleItem">
-        <div className="CycleColumn">Duration</div>
         <div className="CycleColumn">Frequency</div>
+        <div className="CycleColumn">Duration</div>
         <div className="CycleColumn">Start time</div>
       </div>
       <div className="Scrollable">
-        {ticks.reverse().map(({ elapsed, date, interval }, index) => {
+        {ticks.map(({ elapsed, date, interval, count }, index) => {
           if (!elapsed) {
             return null;
           }
@@ -19,12 +21,12 @@ function Cycles({ ticks }) {
             <div key={index} className="CycleItem">
               <div className="CycleColumn">
                 <span className="CycleInterval">
-                  {elapsed ? formatInterval(elapsed) : "-"}
+                  {interval ? formatMinutes(interval) : "-"}
                 </span>
               </div>
               <div className="CycleColumn">
                 <span className="CycleInterval">
-                  {interval ? formatInterval(interval) : "-"}
+                  {elapsed ? formatMinutes(elapsed) : "-"}
                 </span>
               </div>
               <div className="CycleColumn">
@@ -32,6 +34,14 @@ function Cycles({ ticks }) {
                   {date ? formatTime(date) : "-"}
                 </span>
               </div>
+              <button
+                className="ButtonIcon"
+                onClick={() => {
+                  onRemove(count);
+                }}
+              >
+                <TrashIcon width="1em" />
+              </button>
             </div>
           );
         })}

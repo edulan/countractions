@@ -10,17 +10,11 @@ button {
   padding: 1rem 2rem;
   margin: 0;
   text-decoration: none;
-  background: purple;
   color: #ffffff;
   font-size: 1rem;
   cursor: pointer;
   text-align: center;
   transition: background 250ms ease-in-out, transform 150ms ease;
-}
-
-button:hover,
-button:focus {
-  background: purple;
 }
 
 button:focus {
@@ -78,11 +72,22 @@ button:active {
 .ActionSection {
   flex: 0 1 auto;
   padding: 2em;
+  display: flex;
+  align-items: baseline;
+}
+
+.ActionSection > button {
+  margin-right: 0.5em;
+}
+
+.ActionSection > button:last-child {
+  margin-right: 0;
 }
 
 .CycleItem {
   display: flex;
   justify-content: center;
+  align-items: baseline;
   margin-bottom: 1em;
 }
 
@@ -97,10 +102,15 @@ button:active {
   justify-content: center;
 }
 
-.StartStopButton {
-  width: 100%;
-  font-size: 1.5em;
+.ActionButton {
+  background-color: purple;
+  font-size: 1em;
   padding: 1em;
+  flex: 1;
+}
+
+.ActionButton:disabled {
+  background-color: gray;
 }
 
 .Counter {
@@ -117,4 +127,11 @@ button:active {
 .Scrollable {
   overflow-y: auto;
   max-height: 7rem;
+}
+
+.ButtonIcon {
+  font-size: 1em;
+  padding: 0.5em 1em;
+  color: black;
+  background-color: transparent;
 }

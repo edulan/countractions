@@ -78,7 +78,7 @@ function App() {
     count: tick.count,
     elapsed: tick.elapsed,
     date: tick.start,
-    interval: prevTick ? tick.start - prevTick.start : null
+    interval: prevTick ? tick.start - prevTick.start : 0
   }));
 
   function onToggleTimer() {

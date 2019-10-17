@@ -1,10 +1,12 @@
 import React from "react";
 import { formatMinutes, formatHours } from "./formatters";
 
+const INTERVAL_SAMPLE_SIZE = 5;
+
 function Stats({ ticks }) {
   const intervals = ticks
-    .map(({ interval }) => interval)
-    .filter(interval => interval !== null);
+    .slice(0, INTERVAL_SAMPLE_SIZE)
+    .map(({ interval }) => interval);
   const intervalsSum = intervals.reduce((total, value) => total + value, 0);
   const intervalsCount = intervals.length;
   const intervalsAverage = intervalsSum / intervalsCount;

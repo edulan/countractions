@@ -34,6 +34,7 @@ button:active {
 .StatsSection {
   flex: 0 1 auto;
   padding: 0 1em;
+  min-height: 5em;
 }
 
 .CounterSection {
@@ -65,7 +66,7 @@ button:active {
 }
 
 .CyclesSection {
-  flex: 0 1 auto;
+  flex: 1;
   padding: 0 1em;
 }
 
@@ -126,7 +127,7 @@ button:active {
 
 .Scrollable {
   overflow-y: auto;
-  max-height: 7rem;
+  max-height: 9rem;
 }
 
 .ButtonIcon {

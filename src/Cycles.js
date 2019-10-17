@@ -20,19 +20,13 @@ function Cycles({ ticks, onRemove }) {
           return (
             <div key={index} className="CycleItem">
               <div className="CycleColumn">
-                <span className="CycleInterval">
-                  {interval ? formatMinutes(interval) : "-"}
-                </span>
+                <span className="CycleInterval">{formatMinutes(interval)}</span>
               </div>
               <div className="CycleColumn">
-                <span className="CycleInterval">
-                  {elapsed ? formatMinutes(elapsed) : "-"}
-                </span>
+                <span className="CycleInterval">{formatMinutes(elapsed)}</span>
               </div>
               <div className="CycleColumn">
-                <span className="CycleInterval">
-                  {date ? formatTime(date) : "-"}
-                </span>
+                <span className="CycleInterval">{formatTime(date)}</span>
               </div>
               <button
                 className="ButtonIcon"

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import PropTypes from "prop-types";
 
 import { formatTick } from "./formatters";
 
@@ -32,5 +33,10 @@ function Counter({ isTimerEnabled, lastTick }) {
     </div>
   );
 }
+
+Counter.propTypes = {
+  isTimerEnabled: PropTypes.bool,
+  lastTick: PropTypes.bool
+};
 
 export default Counter;

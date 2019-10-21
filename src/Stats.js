@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { formatMinutes, formatHours } from "./formatters";
 
 const INTERVAL_SAMPLE_SIZE = 5;
@@ -6,7 +7,8 @@ const INTERVAL_SAMPLE_SIZE = 5;
 function Stats({ ticks }) {
   const intervals = ticks
     .slice(0, INTERVAL_SAMPLE_SIZE)
-    .map(({ interval }) => interval);
+    .map(({ interval }) => interval)
+    .filter(interval => interval > 0);
   const intervalsSum = intervals.reduce((total, value) => total + value, 0);
   const intervalsCount = intervals.length;
   const intervalsAverage = intervalsSum / intervalsCount;
@@ -45,5 +47,15 @@ function Stats({ ticks }) {
     </>
   );
 }
+
+Stats.propTypes = {
+  ticks: PropTypes.arrayOf(
+    PropTypes.shape({
+      elapsed: PropTypes.number,
+      date: PropTypes.number,
+      interval: PropTypes.number
+    })
+  )
+};
 
 export default Stats;

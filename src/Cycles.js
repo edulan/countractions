@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { formatMinutes, formatTime } from "./formatters";
 
 import TrashIcon from "./TrashIcon";
@@ -13,17 +14,15 @@ function Cycles({ ticks, onRemove }) {
       </div>
       <div className="Scrollable">
         {ticks.map(({ elapsed, date, interval, count }, index) => {
-          if (!elapsed) {
-            return null;
-          }
-
           return (
             <div key={index} className="CycleItem">
               <div className="CycleColumn">
                 <span className="CycleInterval">{formatMinutes(interval)}</span>
               </div>
               <div className="CycleColumn">
-                <span className="CycleInterval">{formatMinutes(elapsed)}</span>
+                <span className="CycleInterval">
+                  {elapsed ? formatMinutes(elapsed) : "-"}
+                </span>
               </div>
               <div className="CycleColumn">
                 <span className="CycleInterval">{formatTime(date)}</span>
@@ -43,5 +42,16 @@ function Cycles({ ticks, onRemove }) {
     </>
   );
 }
+
+Cycles.propTypes = {
+  ticks: PropTypes.arrayOf(
+    PropTypes.shape({
+      elapsed: PropTypes.number,
+      date: PropTypes.number,
+      interval: PropTypes.number
+    })
+  ),
+  onRemove: PropTypes.func
+};
 
 export default Cycles;

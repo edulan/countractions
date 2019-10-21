@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 
 function TrashIcon({ width }) {
   return (
@@ -17,5 +18,9 @@ function TrashIcon({ width }) {
     </svg>
   );
 }
+
+TrashIcon.propTypes = {
+  width: PropTypes.number
+};
 
 export default TrashIcon;

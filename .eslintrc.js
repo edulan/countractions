@@ -5,6 +5,7 @@ module.exports = {
   },
   extends: ["eslint:recommended", "plugin:react/recommended"],
   globals: {
+    process: "readonly",
     Atomics: "readonly",
     SharedArrayBuffer: "readonly"
   },

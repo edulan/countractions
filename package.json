@@ -1,8 +1,9 @@
 {
-  "name": "new",
+  "name": "countractions",
   "version": "1.0.0",
   "description": "",
   "keywords": [],
+  "license": "MIT",
   "main": "src/index.js",
   "dependencies": {
     "react": "16.8.6",

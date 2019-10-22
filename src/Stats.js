@@ -4,8 +4,8 @@ import { formatMinutes, formatHours } from "./formatters";
 
 const INTERVAL_SAMPLE_SIZE = 5;
 
-function Stats({ ticks }) {
-  const intervals = ticks
+function Stats({ cycles }) {
+  const intervals = cycles
     .slice(0, INTERVAL_SAMPLE_SIZE)
     .map(({ interval }) => interval)
     .filter(interval => interval > 0);
@@ -13,15 +13,15 @@ function Stats({ ticks }) {
   const intervalsCount = intervals.length;
   const intervalsAverage = intervalsSum / intervalsCount;
 
-  const elapseds = ticks
+  const elapseds = cycles
     .map(({ elapsed }) => elapsed)
     .filter(elapsed => elapsed !== null);
   const elapsedsSum = elapseds.reduce((total, value) => total + value, 0);
   const elapsedsCount = elapseds.length;
   const elapsedsAverage = elapsedsSum / elapsedsCount;
 
-  const [firstTick] = ticks.slice(0);
-  const [lastTick] = ticks.slice(-1);
+  const [firstTick] = cycles.slice(0);
+  const [lastTick] = cycles.slice(-1);
 
   return (
     <>
@@ -49,7 +49,7 @@ function Stats({ ticks }) {
 }
 
 Stats.propTypes = {
-  ticks: PropTypes.arrayOf(
+  cycles: PropTypes.arrayOf(
     PropTypes.shape({
       elapsed: PropTypes.number,
       date: PropTypes.number,

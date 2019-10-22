@@ -8,6 +8,7 @@ function Counter({ isTimerEnabled, lastTick }) {
 
   useEffect(() => {
     if (!isTimerEnabled) {
+      setCurrentTime(0);
       return;
     }
 
@@ -21,7 +22,7 @@ function Counter({ isTimerEnabled, lastTick }) {
   }, [isTimerEnabled, currentTime, setCurrentTime]);
 
   const [integerDigits, fractionDigits] = formatTick(
-    currentTime - lastTick
+    Math.max(currentTime - lastTick, 0)
   ).split(".");
 
   return (
@@ -36,7 +37,7 @@ function Counter({ isTimerEnabled, lastTick }) {
 
 Counter.propTypes = {
   isTimerEnabled: PropTypes.bool,
-  lastTick: PropTypes.bool
+  lastTick: PropTypes.number
 };
 
 export default Counter;

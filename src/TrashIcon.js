@@ -20,7 +20,7 @@ function TrashIcon({ width }) {
 }
 
 TrashIcon.propTypes = {
-  width: PropTypes.number
+  width: PropTypes.string
 };
 
 export default TrashIcon;

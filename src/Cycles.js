@@ -4,7 +4,7 @@ import { formatMinutes, formatTime } from "./formatters";
 
 import TrashIcon from "./TrashIcon";
 
-function Cycles({ ticks, onRemove }) {
+function Cycles({ cycles, onRemove }) {
   return (
     <>
       <div className="CycleItem">
@@ -13,7 +13,7 @@ function Cycles({ ticks, onRemove }) {
         <div className="CycleColumn">Start time</div>
       </div>
       <div className="Scrollable">
-        {ticks.map(({ elapsed, date, interval, count }, index) => {
+        {cycles.map(({ elapsed, date, interval, count }, index) => {
           return (
             <div key={index} className="CycleItem">
               <div className="CycleColumn">
@@ -44,7 +44,7 @@ function Cycles({ ticks, onRemove }) {
 }
 
 Cycles.propTypes = {
-  ticks: PropTypes.arrayOf(
+  cycles: PropTypes.arrayOf(
     PropTypes.shape({
       elapsed: PropTypes.number,
       date: PropTypes.number,

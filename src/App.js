@@ -1,4 +1,4 @@
-import React, { useReducer } from "react";
+import React, { useReducer, useEffect } from "react";
 
 import Counter from "./Counter";
 import Cycles from "./Cycles";
@@ -36,6 +36,7 @@ function appReducer(state, action) {
         ...state,
         count: state.count + 1,
         isTimerEnabled: false,
+        lastTick: action.interval,
         ticks: [
           {
             ...firstTick,
@@ -63,18 +64,38 @@ function appReducer(state, action) {
   }
 }
 
+function retrieveTicks(defaultValue) {
+  const serializedTicks = window.localStorage.getItem("ticks");
+
+  if (!serializedTicks) {
+    return defaultValue;
+  }
+
+  return JSON.parse(serializedTicks);
+}
+
+function saveTicks(ticks) {
+  const serializedTicks = JSON.stringify(ticks);
+
+  window.localStorage.setItem("ticks", serializedTicks);
+}
+
 const initialAppState = {
   count: 0,
   isTimerEnabled: false,
   lastTick: 0,
-  ticks: []
+  ticks: retrieveTicks([])
 };
 
 function App() {
   const [state, dispatch] = useReducer(appReducer, initialAppState);
   const { isTimerEnabled, lastTick, ticks } = state;
 
-  const finalTicks = zip(ticks, ticks.slice(1)).map(([tick, prevTick]) => ({
+  useEffect(() => {
+    saveTicks(ticks.filter(({ elapsed }) => elapsed !== null));
+  }, [ticks]);
+
+  const cycles = zip(ticks, ticks.slice(1)).map(([tick, prevTick]) => ({
     count: tick.count,
     elapsed: tick.elapsed,
     date: tick.start,
@@ -96,9 +117,11 @@ function App() {
   }
 
   function onClear() {
-    dispatch({
-      type: CLEAR
-    });
+    if (window.confirm("Do you really want to clear all recorded data?")) {
+      dispatch({
+        type: CLEAR
+      });
+    }
   }
 
   return (
@@ -107,11 +130,11 @@ function App() {
         <Counter isTimerEnabled={isTimerEnabled} lastTick={lastTick} />
       </div>
       <div className="CyclesSection">
-        <Cycles ticks={finalTicks} onRemove={onRemove} />
+        <Cycles cycles={cycles} onRemove={onRemove} />
       </div>
       <div className="StatsSection">
         <hr className="Separator" />
-        <Stats ticks={finalTicks} />
+        <Stats cycles={cycles} />
       </div>
       <div className="ActionSection">
         <button

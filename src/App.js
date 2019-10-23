@@ -24,7 +24,7 @@ function appReducer(state, action) {
         ticks: [
           {
             count: state.count,
-            start: performance.timing.navigationStart + action.interval,
+            start: action.interval,
             stop: null,
             elapsed: null
           },
@@ -40,11 +40,8 @@ function appReducer(state, action) {
         ticks: [
           {
             ...firstTick,
-            stop: performance.timing.navigationStart + action.interval,
-            elapsed:
-              performance.timing.navigationStart +
-              action.interval -
-              firstTick.start
+            stop: action.interval,
+            elapsed: action.interval - firstTick.start
           },
           ...restTicks
         ]
@@ -105,7 +102,7 @@ function App() {
   function onToggleTimer() {
     dispatch({
       type: !isTimerEnabled ? START : STOP,
-      interval: performance.now()
+      interval: Date.now()
     });
   }
 

@@ -13,7 +13,7 @@ function Counter({ isTimerEnabled, lastTick }) {
     }
 
     const requestId = window.requestAnimationFrame(() => {
-      setCurrentTime(performance.now());
+      setCurrentTime(Date.now());
     });
 
     return () => {

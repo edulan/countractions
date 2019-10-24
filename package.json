@@ -11,13 +11,17 @@
     "react-scripts": "3.0.1"
   },
   "devDependencies": {
+    "@hint/configuration-progressive-web-apps": "^6.0.10",
+    "@hint/formatter-codeframe": "^3.1.10",
+    "hint": "^5.3.3",
     "typescript": "3.3.3"
   },
   "scripts": {
     "start": "react-scripts start --no-cache",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom --no-cache",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "webhint": "hint http://localhost:3000"
   },
   "browserslist": [
     ">0.2%",

@@ -1,0 +1,7 @@
+{
+  "extends": ["progressive-web-apps"],
+  "formatters": ["codeframe"],
+  "hints": {
+    "manifest-file-extension": "off"
+  }
+}

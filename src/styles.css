@@ -15,6 +15,7 @@ button {
   cursor: pointer;
   text-align: center;
   transition: background 250ms ease-in-out, transform 150ms ease;
+  user-select: none;
 }
 
 button:focus {
@@ -104,7 +105,7 @@ button:active {
 }
 
 .ActionButton {
-  background-color: purple;
+  background-color: #9900ff;
   font-size: 1em;
   padding: 1em;
   flex: 1;

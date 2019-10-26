@@ -1,7 +1,10 @@
+@import-normalize;
+
 body {
-  font-family: sans-serif;
-  margin: 0;
-  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
 }
 
 button {

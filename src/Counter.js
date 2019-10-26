@@ -21,16 +21,15 @@ function Counter({ isTimerEnabled, lastTick }) {
     };
   }, [isTimerEnabled, currentTime, setCurrentTime]);
 
-  const [integerDigits, fractionDigits] = formatTick(
-    Math.max(currentTime - lastTick, 0)
-  ).split(".");
+  const [integerDigits] = formatTick(Math.max(currentTime - lastTick, 0)).split(
+    "."
+  );
 
   return (
     <div className="CounterContainer">
       <div className="CounterDigits">
         <p className="IntegerDigits">{integerDigits}</p>
       </div>
-      <p className="FractionDigits">{fractionDigits.padStart(2, "0")}</p>
     </div>
   );
 }

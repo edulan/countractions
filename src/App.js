@@ -127,7 +127,11 @@ function App() {
         <Counter isTimerEnabled={isTimerEnabled} lastTick={lastTick} />
       </div>
       <div className="CyclesSection">
-        <Cycles cycles={cycles} onRemove={onRemove} />
+        <Cycles
+          cycles={cycles}
+          onRemove={onRemove}
+          isTimerEnabled={isTimerEnabled}
+        />
       </div>
       <div className="StatsSection">
         <hr className="Separator" />

@@ -4,7 +4,7 @@ import { formatMinutes, formatTime } from "./formatters";
 
 import TrashIcon from "./TrashIcon";
 
-function Cycles({ cycles, onRemove }) {
+function Cycles({ cycles, onRemove, isTimerEnabled }) {
   return (
     <>
       <div className="CycleItem">
@@ -28,6 +28,7 @@ function Cycles({ cycles, onRemove }) {
                 <span className="CycleInterval">{formatTime(date)}</span>
               </div>
               <button
+                disabled={isTimerEnabled}
                 className="ButtonIcon"
                 onClick={() => {
                   onRemove(count);
@@ -51,7 +52,8 @@ Cycles.propTypes = {
       interval: PropTypes.number
     })
   ),
-  onRemove: PropTypes.func
+  onRemove: PropTypes.func,
+  isTimerEnabled: PropTypes.bool
 };
 
 export default Cycles;

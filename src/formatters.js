@@ -6,10 +6,21 @@ export function formatTime(timestamp) {
   return new Date(Math.trunc(timestamp)).toLocaleTimeString();
 }
 
+export function formatSeconds(timestamp) {
+  const formatOptions = {
+    second: "numeric",
+    hour12: false,
+    timeZone: "UTC"
+  };
+
+  return new Intl.DateTimeFormat(undefined, formatOptions).format(
+    new Date(timestamp)
+  );
+}
+
 export function formatMinutes(timestamp) {
   const formatOptions = {
-    second: "2-digit",
-    minute: "2-digit",
+    minute: "numeric",
     hour12: false,
     timeZone: "UTC"
   };
@@ -21,9 +32,7 @@ export function formatMinutes(timestamp) {
 
 export function formatHours(timestamp) {
   const formatOptions = {
-    second: "2-digit",
-    minute: "2-digit",
-    hour: "2-digit",
+    hour: "numeric",
     hour12: false,
     timeZone: "UTC"
   };

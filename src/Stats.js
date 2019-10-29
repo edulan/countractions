@@ -1,47 +1,103 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { formatMinutes, formatHours } from "./formatters";
+import { formatSeconds, formatMinutes, formatHours } from "./formatters";
 
-const INTERVAL_SAMPLE_SIZE = 5;
+const FREQUENCY_SAMPLE_SIZE = 5;
 
-function Stats({ cycles }) {
-  const intervals = cycles
-    .slice(0, INTERVAL_SAMPLE_SIZE)
+function calculateFrequency(cycles) {
+  const timestamps = cycles
+    .slice(0, FREQUENCY_SAMPLE_SIZE)
     .map(({ interval }) => interval)
     .filter(interval => interval > 0);
-  const intervalsSum = intervals.reduce((total, value) => total + value, 0);
-  const intervalsCount = intervals.length;
-  const intervalsAverage = intervalsSum / intervalsCount;
 
-  const elapseds = cycles
+  if (timestamps.length === 0) {
+    return 0;
+  }
+
+  const sum = timestamps.reduce((total, value) => total + value, 0);
+  const count = timestamps.length;
+  const average = sum / count;
+
+  return average;
+}
+
+function calculateDuration(cycles) {
+  const timestamps = cycles
     .map(({ elapsed }) => elapsed)
     .filter(elapsed => elapsed !== null);
-  const elapsedsSum = elapseds.reduce((total, value) => total + value, 0);
-  const elapsedsCount = elapseds.length;
-  const elapsedsAverage = elapsedsSum / elapsedsCount;
 
+  if (timestamps.length === 0) {
+    return 0;
+  }
+
+  const sum = timestamps.reduce((total, value) => total + value, 0);
+  const count = timestamps.length;
+  const average = sum / count;
+
+  return average;
+}
+
+function calculateElapsedTime(cycles) {
   const [firstTick] = cycles.slice(0);
   const [lastTick] = cycles.slice(-1);
 
+  if (!firstTick && !lastTick) {
+    return 0;
+  }
+
+  return firstTick.date - lastTick.date;
+}
+
+function Stats({ cycles }) {
+  const frequency = calculateFrequency(cycles);
+  const duration = calculateDuration(cycles);
+  const elapsedTime = calculateElapsedTime(cycles);
+
   return (
     <>
-      <div className="CycleItem">
-        <div className="CycleColumn">
-          <span className="CycleInterval">
-            {intervalsCount > 0 && formatMinutes(intervalsAverage)}
-          </span>
+      <div className="StatsContainer">
+        <div className="StatsItem">
+          <span className="MeasureTitle">Frequency</span>
+          <div className="MeasureTime">
+            {formatMinutes(frequency) > 0 && (
+              <>
+                <span className="MeasureDigits">
+                  {formatMinutes(frequency)}
+                </span>
+                <span>min</span>
+              </>
+            )}
+            <span className="MeasureDigits">{formatSeconds(frequency)}</span>
+            <span>s</span>
+          </div>
         </div>
-        <div className="CycleColumn">
-          <span className="CycleInterval">
-            {elapsedsCount > 0 && formatMinutes(elapsedsAverage)}
-          </span>
+        <div className="StatsItem">
+          <span className="MeasureTitle">Duration</span>
+          <div className="MeasureTime">
+            {formatMinutes(duration) > 0 && (
+              <>
+                <span className="MeasureDigits">{formatMinutes(duration)}</span>
+                <span>min</span>
+              </>
+            )}
+            <span className="MeasureDigits">{formatSeconds(duration)}</span>
+            <span>s</span>
+          </div>
         </div>
-        <div className="CycleColumn">
-          <span className="CycleInterval">
-            {firstTick &&
-              lastTick &&
-              formatHours(firstTick.date - lastTick.date)}
-          </span>
+        <div className="StatsItem">
+          <span className="MeasureTitle">Timing</span>
+          <div className="MeasureTime">
+            {formatHours(elapsedTime) > 0 && (
+              <>
+                <span className="MeasureDigits">
+                  {formatHours(elapsedTime)}
+                </span>
+                <span>h</span>
+              </>
+            )}
+            <span className="MeasureDigits">{formatMinutes(elapsedTime)}</span>
+            <span>min</span>
+          </div>
         </div>
       </div>
     </>

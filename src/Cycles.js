@@ -1,46 +1,45 @@
-import React from "react";
+import React, { Fragment } from "react";
 import PropTypes from "prop-types";
-import { formatMinutes, formatTime } from "./formatters";
+import { formatMinutes, formatTime, formatSeconds } from "./formatters";
 
 import TrashIcon from "./TrashIcon";
 
 function Cycles({ cycles, onRemove, isTimerEnabled }) {
   return (
-    <>
-      <div className="CycleItem">
-        <div className="CycleColumn">Frequency</div>
-        <div className="CycleColumn">Duration</div>
-        <div className="CycleColumn">Start time</div>
-      </div>
-      <div className="Scrollable">
-        {cycles.map(({ elapsed, date, interval, count }, index) => {
-          return (
-            <div key={index} className="CycleItem">
-              <div className="CycleColumn">
-                <span className="CycleInterval">{formatMinutes(interval)}</span>
-              </div>
-              <div className="CycleColumn">
-                <span className="CycleInterval">
-                  {elapsed ? formatMinutes(elapsed) : "-"}
-                </span>
-              </div>
-              <div className="CycleColumn">
-                <span className="CycleInterval">{formatTime(date)}</span>
-              </div>
-              <button
-                disabled={isTimerEnabled}
-                className="ButtonIcon"
-                onClick={() => {
-                  onRemove(count);
-                }}
-              >
-                <TrashIcon width="1em" />
-              </button>
+    <div className="CycleContainer">
+      <div className="CycleHeader">Frequency</div>
+      <div className="CycleHeader">Duration</div>
+      <div className="CycleHeader">Start time</div>
+      <div className="CycleHeader"></div>
+      {cycles.map(({ elapsed, date, interval }, index) => {
+        return (
+          <Fragment key={index}>
+            <div className="CycleColumn">
+              <span className="CycleInterval">
+                {formatMinutes(interval)}min
+              </span>
+              <span className="CycleInterval">{formatSeconds(interval)}s</span>
             </div>
-          );
-        })}
-      </div>
-    </>
+            <div className="CycleColumn">
+              <span className="CycleInterval">{formatMinutes(elapsed)}min</span>
+              <span className="CycleInterval">{formatSeconds(elapsed)}s</span>
+            </div>
+            <div className="CycleColumn">
+              <span className="CycleInterval">{formatTime(date)}</span>
+            </div>
+            <button
+              disabled={isTimerEnabled}
+              className="ButtonIcon"
+              onClick={() => {
+                onRemove(index);
+              }}
+            >
+              <TrashIcon width="1em" />
+            </button>
+          </Fragment>
+        );
+      })}
+    </div>
   );
 }
 
@@ -54,6 +53,11 @@ Cycles.propTypes = {
   ),
   onRemove: PropTypes.func,
   isTimerEnabled: PropTypes.bool
+};
+
+Cycles.defaultProps = {
+  onRemove: () => {},
+  isTimerEnabled: false
 };
 
 export default Cycles;

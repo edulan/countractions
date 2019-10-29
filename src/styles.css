@@ -1,6 +1,9 @@
 @import-normalize;
 
 body {
+  /* This should be in reset styles, right? */
+  margin: 0;
+  padding: 0;
   -webkit-tap-highlight-color: transparent;
   -webkit-touch-callout: none;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
@@ -35,10 +38,37 @@ button:active {
   flex-direction: column;
 }
 
-.StatsSection {
-  flex: 0 1 auto;
-  padding: 0 1em;
-  min-height: 5em;
+.AppContainer {
+  padding: 1em;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.NavigationSection {
+  display: flex;
+  margin-bottom: 1em;
+}
+
+.NavigationButton {
+  width: 100%;
+  background-color: transparent;
+  color: initial;
+  padding: 0.5em 1em;
+}
+
+.NavigationButtonActive {
+  color: #9900ff;
+}
+
+.NavigationItem {
+  flex: 1;
+}
+
+.ContentSection {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
 }
 
 .CounterSection {
@@ -51,11 +81,24 @@ button:active {
 
 .CounterContainer {
   display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.CounterTime {
+  display: flex;
   align-items: baseline;
 }
 
 .CounterDigits {
-  margin-right: 0.5em;
+  font-size: 5em;
+  font-weight: normal;
+}
+
+.CounterUnits {
+  font-size: 2em;
+  font-weight: normal;
 }
 
 .IntegerDigits {
@@ -76,7 +119,6 @@ button:active {
 
 .ActionSection {
   flex: 0 1 auto;
-  padding: 2em;
   display: flex;
   align-items: baseline;
 }
@@ -89,22 +131,18 @@ button:active {
   margin-right: 0;
 }
 
-.CycleItem {
-  display: flex;
-  justify-content: center;
-  align-items: baseline;
-  margin-bottom: 1em;
+.CycleContainer {
+  display: grid;
+  grid-template-columns: 1fr 1fr auto auto;
+  row-gap: 1em;
 }
 
-.CycleInterval {
+.CycleHeader {
+  font-weight: bold;
+}
+
+.MeasureDigits {
   font-size: 1.5em;
-}
-
-.CycleColumn {
-  flex: 1;
-  width: 100%;
-  display: flex;
-  justify-content: center;
 }
 
 .ActionButton {
@@ -136,7 +174,32 @@ button:active {
 
 .ButtonIcon {
   font-size: 1em;
-  padding: 0.5em 1em;
+  padding: 0 0 0.5em 1em;
   color: black;
   background-color: transparent;
+}
+
+.StatsContainer {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.StatsItem {
+  flex: 1;
+  flex-direction: column;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.MeasureTitle {
+  font-size: 1em;
+  font-weight: lighter;
+}
+
+.MeasureTime {
+  display: flex;
+  align-items: baseline;
+  font-size: 1.5em;
 }

@@ -1,4 +1,4 @@
-import React, { useReducer, useEffect } from "react";
+import React, { useReducer, useState, useEffect } from "react";
 
 import Counter from "./Counter";
 import Cycles from "./Cycles";
@@ -10,7 +10,10 @@ import "./styles.css";
 const START = "START";
 const STOP = "STOP";
 const REMOVE = "REMOVE";
-const CLEAR = "CLEAR";
+
+const STATS_SCREEN = "STATS_SCREEN";
+const COUNTER_SCREEN = "COUNTER_SCREEN";
+const HISTORY_SCREEN = "HISTORY_SCREEN";
 
 function appReducer(state, action) {
   const [firstTick, ...restTicks] = state.ticks;
@@ -19,11 +22,8 @@ function appReducer(state, action) {
     case START:
       return {
         ...state,
-        isTimerEnabled: true,
-        lastTick: action.interval,
         ticks: [
           {
-            count: state.count,
             start: action.interval,
             stop: null,
             elapsed: null
@@ -34,9 +34,6 @@ function appReducer(state, action) {
     case STOP:
       return {
         ...state,
-        count: state.count + 1,
-        isTimerEnabled: false,
-        lastTick: action.interval,
         ticks: [
           {
             ...firstTick,
@@ -49,12 +46,7 @@ function appReducer(state, action) {
     case REMOVE:
       return {
         ...state,
-        ticks: state.ticks.filter(tick => tick.count !== action.count)
-      };
-    case CLEAR:
-      return {
-        ...state,
-        ticks: []
+        ticks: state.ticks.filter((_, index) => index !== action.index)
       };
     default:
       throw new Error("Action not supported");
@@ -77,84 +69,111 @@ function saveTicks(ticks) {
   window.localStorage.setItem("ticks", serializedTicks);
 }
 
+const initialTicks = retrieveTicks([]);
 const initialAppState = {
-  count: 0,
-  isTimerEnabled: false,
-  lastTick: 0,
-  ticks: retrieveTicks([])
+  ticks: initialTicks
 };
 
 function App() {
   const [state, dispatch] = useReducer(appReducer, initialAppState);
-  const { isTimerEnabled, lastTick, ticks } = state;
+  const [screen, setScreen] = useState(STATS_SCREEN);
+  const { ticks } = state;
 
   useEffect(() => {
     saveTicks(ticks.filter(({ elapsed }) => elapsed !== null));
   }, [ticks]);
 
   const cycles = zip(ticks, ticks.slice(1)).map(([tick, prevTick]) => ({
-    count: tick.count,
     elapsed: tick.elapsed,
     date: tick.start,
     interval: prevTick ? tick.start - prevTick.start : 0
   }));
 
-  function onToggleTimer() {
+  function startTimer() {
     dispatch({
-      type: !isTimerEnabled ? START : STOP,
+      type: START,
       interval: Date.now()
     });
   }
 
-  function onRemove(count) {
+  function stopTimer() {
     dispatch({
-      type: REMOVE,
-      count
+      type: STOP,
+      interval: Date.now()
     });
   }
 
-  function onClear() {
-    if (window.confirm("Do you really want to clear all recorded data?")) {
-      dispatch({
-        type: CLEAR
-      });
-    }
+  function removeTick(index) {
+    dispatch({
+      type: REMOVE,
+      index
+    });
   }
 
   return (
     <div className="App">
-      <div className="CounterSection">
-        <Counter isTimerEnabled={isTimerEnabled} lastTick={lastTick} />
-      </div>
-      <div className="CyclesSection">
-        <Cycles
-          cycles={cycles}
-          onRemove={onRemove}
-          isTimerEnabled={isTimerEnabled}
-        />
-      </div>
-      <div className="StatsSection">
-        <hr className="Separator" />
-        <Stats cycles={cycles} />
-      </div>
-      <div className="ActionSection">
-        <button
-          disabled={isTimerEnabled}
-          className="ActionButton"
-          onClick={() => {
-            onClear();
-          }}
-        >
-          Clear
-        </button>
-        <button
-          className="ActionButton"
-          onClick={() => {
-            onToggleTimer();
-          }}
-        >
-          {isTimerEnabled ? "Stop" : "Start"}
-        </button>
+      <div className="AppContainer">
+        {screen !== COUNTER_SCREEN && (
+          <div className="NavigationSection">
+            <div className="NavigationItem">
+              <button
+                onClick={() => setScreen(STATS_SCREEN)}
+                className={`NavigationButton ${
+                  screen === STATS_SCREEN ? "NavigationButtonActive" : ""
+                }`}
+              >
+                Stats
+              </button>
+            </div>
+            <div className="NavigationItem">
+              <button
+                onClick={() => setScreen(HISTORY_SCREEN)}
+                className={`NavigationButton ${
+                  screen === HISTORY_SCREEN ? "NavigationButtonActive" : ""
+                }`}
+              >
+                History
+              </button>
+            </div>
+          </div>
+        )}
+        {screen === STATS_SCREEN && (
+          <div className="ContentSection">
+            <Stats cycles={cycles} />
+            <div className="ActionSection">
+              <button
+                className="ActionButton"
+                onClick={() => {
+                  startTimer();
+                  setScreen(COUNTER_SCREEN);
+                }}
+              >
+                Start
+              </button>
+            </div>
+          </div>
+        )}
+        {screen === COUNTER_SCREEN && (
+          <div className="ContentSection">
+            <Counter prevTime={Date.now()} />
+            <div className="ActionSection">
+              <button
+                className="ActionButton"
+                onClick={() => {
+                  stopTimer();
+                  setScreen(STATS_SCREEN);
+                }}
+              >
+                Stop
+              </button>
+            </div>
+          </div>
+        )}
+        {screen === HISTORY_SCREEN && (
+          <div className="ContentSection">
+            <Cycles cycles={cycles} onRemove={removeTick} />
+          </div>
+        )}
       </div>
     </div>
   );

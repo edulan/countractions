@@ -3,15 +3,10 @@ import PropTypes from "prop-types";
 
 import { formatTick } from "./formatters";
 
-function Counter({ isTimerEnabled, lastTick }) {
+function Counter({ prevTime }) {
   const [currentTime, setCurrentTime] = useState(0);
 
   useEffect(() => {
-    if (!isTimerEnabled) {
-      setCurrentTime(0);
-      return;
-    }
-
     const requestId = window.requestAnimationFrame(() => {
       setCurrentTime(Date.now());
     });
@@ -19,24 +14,24 @@ function Counter({ isTimerEnabled, lastTick }) {
     return () => {
       window.cancelAnimationFrame(requestId);
     };
-  }, [isTimerEnabled, currentTime, setCurrentTime]);
+  }, [currentTime, setCurrentTime]);
 
-  const [integerDigits] = formatTick(Math.max(currentTime - lastTick, 0)).split(
+  const [integerDigits] = formatTick(Math.max(currentTime - prevTime, 0)).split(
     "."
   );
 
   return (
     <div className="CounterContainer">
-      <div className="CounterDigits">
-        <p className="IntegerDigits">{integerDigits}</p>
+      <div className="CounterTime">
+        <span className="CounterDigits">{integerDigits}</span>
+        <span className="CounterUnits">s</span>
       </div>
     </div>
   );
 }
 
 Counter.propTypes = {
-  isTimerEnabled: PropTypes.bool,
-  lastTick: PropTypes.number
+  prevTime: PropTypes.number
 };
 
 export default Counter;

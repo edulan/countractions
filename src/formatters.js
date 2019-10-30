@@ -1,5 +1,5 @@
 export function formatTick(tick) {
-  return Math.abs(tick / 1000).toFixed(2);
+  return Math.abs(tick / 1000).toFixed(0);
 }
 
 export function formatTime(timestamp) {

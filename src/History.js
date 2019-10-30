@@ -4,7 +4,7 @@ import { formatMinutes, formatTime, formatSeconds } from "./formatters";
 
 import TrashIcon from "./TrashIcon";
 
-function Cycles({ cycles, onRemove, isTimerEnabled }) {
+function History({ cycles, onRemove }) {
   return (
     <div className="CycleContainer">
       <div className="CycleHeader">Frequency</div>
@@ -28,7 +28,6 @@ function Cycles({ cycles, onRemove, isTimerEnabled }) {
               <span className="CycleInterval">{formatTime(date)}</span>
             </div>
             <button
-              disabled={isTimerEnabled}
               className="ButtonIcon"
               onClick={() => {
                 onRemove(index);
@@ -43,7 +42,7 @@ function Cycles({ cycles, onRemove, isTimerEnabled }) {
   );
 }
 
-Cycles.propTypes = {
+History.propTypes = {
   cycles: PropTypes.arrayOf(
     PropTypes.shape({
       elapsed: PropTypes.number,
@@ -51,13 +50,11 @@ Cycles.propTypes = {
       interval: PropTypes.number
     })
   ),
-  onRemove: PropTypes.func,
-  isTimerEnabled: PropTypes.bool
+  onRemove: PropTypes.func
 };
 
-Cycles.defaultProps = {
-  onRemove: () => {},
-  isTimerEnabled: false
+History.defaultProps = {
+  onRemove: () => {}
 };
 
-export default Cycles;
+export default History;

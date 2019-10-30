@@ -16,9 +16,7 @@ function Counter({ prevTime }) {
     };
   }, [currentTime, setCurrentTime]);
 
-  const [integerDigits] = formatTick(Math.max(currentTime - prevTime, 0)).split(
-    "."
-  );
+  const integerDigits = formatTick(Math.max(currentTime - prevTime, 0));
 
   return (
     <div className="CounterContainer">

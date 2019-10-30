@@ -1,7 +1,7 @@
 import React, { useReducer, useState, useEffect } from "react";
 
 import Counter from "./Counter";
-import Cycles from "./Cycles";
+import History from "./History";
 import Stats from "./Stats";
 import { zip } from "./utils";
 
@@ -122,7 +122,7 @@ function App() {
                   screen === STATS_SCREEN ? "NavigationButtonActive" : ""
                 }`}
               >
-                Stats
+                Summary
               </button>
             </div>
             <div className="NavigationItem">
@@ -171,7 +171,7 @@ function App() {
         )}
         {screen === HISTORY_SCREEN && (
           <div className="ContentSection">
-            <Cycles cycles={cycles} onRemove={removeTick} />
+            <History cycles={cycles} onRemove={removeTick} />
           </div>
         )}
       </div>

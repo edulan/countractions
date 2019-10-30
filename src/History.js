@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import { formatMinutes, formatTime, formatSeconds } from "./formatters";
 
@@ -6,26 +6,21 @@ import TrashIcon from "./TrashIcon";
 
 function History({ cycles, onRemove }) {
   return (
-    <div className="CycleContainer">
-      <div className="CycleHeader">Frequency</div>
-      <div className="CycleHeader">Duration</div>
-      <div className="CycleHeader">Start time</div>
-      <div className="CycleHeader"></div>
-      {cycles.map(({ elapsed, date, interval }, index) => {
-        return (
-          <Fragment key={index}>
-            <div className="CycleColumn">
-              <span className="CycleInterval">
-                {formatMinutes(interval)}min
-              </span>
-              <span className="CycleInterval">{formatSeconds(interval)}s</span>
+    <ul className="HistoryContainer">
+      {cycles.map(({ elapsed, date, interval }, index) => (
+        <li className="HistoryListItem" key={index}>
+          <div className="HistoryItem" key={index}>
+            <div className="HistoryDate">
+              <span>{formatTime(date)}</span>
             </div>
-            <div className="CycleColumn">
-              <span className="CycleInterval">{formatMinutes(elapsed)}min</span>
-              <span className="CycleInterval">{formatSeconds(elapsed)}s</span>
-            </div>
-            <div className="CycleColumn">
-              <span className="CycleInterval">{formatTime(date)}</span>
+            <div className="HistoryDuration">
+              {formatMinutes(elapsed) > 0 && (
+                <>
+                  <span>{formatMinutes(elapsed)}</span>
+                  <span>min</span>
+                </>
+              )}
+              <span>{formatSeconds(elapsed)}s</span>
             </div>
             <button
               className="ButtonIcon"
@@ -35,10 +30,18 @@ function History({ cycles, onRemove }) {
             >
               <TrashIcon width="1em" />
             </button>
-          </Fragment>
-        );
-      })}
-    </div>
+          </div>
+          <div className="HistoryFrequency">
+            {interval > 0 && (
+              <>
+                <span>{formatMinutes(interval)}min</span>
+                <span>{formatSeconds(interval)}s</span>
+              </>
+            )}
+          </div>
+        </li>
+      ))}
+    </ul>
   );
 }
 

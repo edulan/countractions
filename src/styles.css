@@ -112,11 +112,6 @@ button:active {
   font-size: 2em;
 }
 
-.CyclesSection {
-  flex: 1;
-  padding: 0 1em;
-}
-
 .ActionSection {
   flex: 0 1 auto;
   display: flex;
@@ -131,14 +126,46 @@ button:active {
   margin-right: 0;
 }
 
-.CycleContainer {
-  display: grid;
-  grid-template-columns: 1fr 1fr auto auto;
-  row-gap: 1em;
+.HistoryContainer {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  list-style: none;
+  padding: 0;
 }
 
-.CycleHeader {
-  font-weight: bold;
+.HistoryListItem {
+  position: relative;
+}
+
+.HistoryListItem::before {
+  position: absolute;
+  margin-right: 1em;
+  right: 100%;
+  padding-top: 0.5em;
+}
+
+.HistoryItem {
+  display: flex;
+  margin-bottom: 2rem;
+  align-items: baseline;
+  background-color: #dcedfb;
+  padding: 1em;
+}
+
+.HistoryFrequency {
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.HistoryDate {
+  font-weight: lighter;
+}
+
+.HistoryDuration {
+  flex: 1;
+  text-align: center;
+  font-size: 1.5em;
 }
 
 .MeasureDigits {
@@ -174,7 +201,7 @@ button:active {
 
 .ButtonIcon {
   font-size: 1em;
-  padding: 0 0 0.5em 1em;
+  padding: 0;
   color: black;
   background-color: transparent;
 }

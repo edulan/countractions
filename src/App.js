@@ -104,10 +104,12 @@ function App() {
   }
 
   function removeTick(index) {
-    dispatch({
-      type: REMOVE,
-      index
-    });
+    if (window.confirm("Do you really want to delete this record?")) {
+      dispatch({
+        type: REMOVE,
+        index
+      });
+    }
   }
 
   return (
@@ -170,7 +172,7 @@ function App() {
           </div>
         )}
         {screen === HISTORY_SCREEN && (
-          <div className="ContentSection">
+          <div className="HistorySection">
             <History cycles={cycles} onRemove={removeTick} />
           </div>
         )}

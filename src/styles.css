@@ -83,7 +83,7 @@ button:active {
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 100%;
+  flex: 1;
 }
 
 .CounterTime {
@@ -182,7 +182,7 @@ button:active {
 .StatsContainer {
   display: flex;
   flex-direction: column;
-  height: 100%;
+  flex: 1;
 }
 
 .StatsItem {

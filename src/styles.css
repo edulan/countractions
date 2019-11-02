@@ -71,14 +71,6 @@ button:active {
   flex-direction: column;
 }
 
-.CounterSection {
-  flex: 1;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 25%;
-}
-
 .CounterContainer {
   display: flex;
   align-items: center;
@@ -107,11 +99,6 @@ button:active {
   font-weight: 500;
 }
 
-.FractionDigits {
-  margin: 0;
-  font-size: 2em;
-}
-
 .ActionSection {
   flex: 0 1 auto;
   display: flex;
@@ -134,17 +121,6 @@ button:active {
   padding: 0;
 }
 
-.HistoryListItem {
-  position: relative;
-}
-
-.HistoryListItem::before {
-  position: absolute;
-  margin-right: 1em;
-  right: 100%;
-  padding-top: 0.5em;
-}
-
 .HistoryItem {
   display: flex;
   margin-bottom: 2rem;
@@ -165,11 +141,8 @@ button:active {
 .HistoryDuration {
   flex: 1;
   text-align: center;
-  font-size: 1.5em;
-}
-
-.MeasureDigits {
-  font-size: 1.5em;
+  font-size: 1em;
+  font-weight: bold;
 }
 
 .ActionButton {
@@ -186,17 +159,6 @@ button:active {
 .Counter {
   font-size: 4em;
   font-weight: bold;
-}
-
-.Separator {
-  margin-block-start: 1em;
-  margin-block-end: 1em;
-  border-color: black;
-}
-
-.Scrollable {
-  overflow-y: auto;
-  max-height: 9rem;
 }
 
 .ButtonIcon {
@@ -228,5 +190,9 @@ button:active {
 .MeasureTime {
   display: flex;
   align-items: baseline;
+  font-size: 1.5em;
+}
+
+.MeasureTime .TimeDigit {
   font-size: 1.5em;
 }

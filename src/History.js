@@ -1,26 +1,20 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { formatMinutes, formatTime, formatSeconds } from "./formatters";
-
+import { formatTime } from "./formatters";
 import TrashIcon from "./TrashIcon";
+import FormattedTime from "./FormattedTime";
 
 function History({ cycles, onRemove }) {
   return (
     <ul className="HistoryContainer">
       {cycles.map(({ elapsed, date, interval }, index) => (
-        <li className="HistoryListItem" key={index}>
+        <li key={index}>
           <div className="HistoryItem" key={index}>
             <div className="HistoryDate">
               <span>{formatTime(date)}</span>
             </div>
             <div className="HistoryDuration">
-              {formatMinutes(elapsed) > 0 && (
-                <>
-                  <span>{formatMinutes(elapsed)}</span>
-                  <span>min</span>
-                </>
-              )}
-              <span>{formatSeconds(elapsed)}s</span>
+              <FormattedTime value={elapsed} />
             </div>
             <button
               className="ButtonIcon"
@@ -32,12 +26,7 @@ function History({ cycles, onRemove }) {
             </button>
           </div>
           <div className="HistoryFrequency">
-            {interval > 0 && (
-              <>
-                <span>{formatMinutes(interval)}min</span>
-                <span>{formatSeconds(interval)}s</span>
-              </>
-            )}
+            <FormattedTime value={interval} />
           </div>
         </li>
       ))}

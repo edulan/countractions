@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { formatSeconds, formatMinutes, formatHours } from "./formatters";
+import FormattedTime from "./FormattedTime";
 
 const FREQUENCY_SAMPLE_SIZE = 5;
 
@@ -48,10 +48,15 @@ function calculateElapsedTime(cycles) {
   return firstTick.date - lastTick.date;
 }
 
+const millisInAnHour = 60 * 60 * 1000;
+
 function Stats({ cycles }) {
-  const frequency = calculateFrequency(cycles);
-  const duration = calculateDuration(cycles);
-  const elapsedTime = calculateElapsedTime(cycles);
+  const lastHourCycles = cycles.filter(
+    ({ date }) => date > Date.now() - millisInAnHour
+  );
+  const frequency = calculateFrequency(lastHourCycles);
+  const duration = calculateDuration(lastHourCycles);
+  const elapsedTime = calculateElapsedTime(lastHourCycles);
 
   return (
     <>
@@ -59,44 +64,19 @@ function Stats({ cycles }) {
         <div className="StatsItem">
           <span className="MeasureTitle">Frequency</span>
           <div className="MeasureTime">
-            {formatMinutes(frequency) > 0 && (
-              <>
-                <span className="MeasureDigits">
-                  {formatMinutes(frequency)}
-                </span>
-                <span>min</span>
-              </>
-            )}
-            <span className="MeasureDigits">{formatSeconds(frequency)}</span>
-            <span>s</span>
+            <FormattedTime value={frequency} />
           </div>
         </div>
         <div className="StatsItem">
           <span className="MeasureTitle">Duration</span>
           <div className="MeasureTime">
-            {formatMinutes(duration) > 0 && (
-              <>
-                <span className="MeasureDigits">{formatMinutes(duration)}</span>
-                <span>min</span>
-              </>
-            )}
-            <span className="MeasureDigits">{formatSeconds(duration)}</span>
-            <span>s</span>
+            <FormattedTime value={duration} />
           </div>
         </div>
         <div className="StatsItem">
           <span className="MeasureTitle">Timing</span>
           <div className="MeasureTime">
-            {formatHours(elapsedTime) > 0 && (
-              <>
-                <span className="MeasureDigits">
-                  {formatHours(elapsedTime)}
-                </span>
-                <span>h</span>
-              </>
-            )}
-            <span className="MeasureDigits">{formatMinutes(elapsedTime)}</span>
-            <span>min</span>
+            <FormattedTime value={elapsedTime} />
           </div>
         </div>
       </div>
